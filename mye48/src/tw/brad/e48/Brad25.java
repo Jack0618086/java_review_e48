@@ -2,7 +2,7 @@ package tw.brad.e48;
 
 public class Brad25 {
 	public static void main(String[] args) {
-		Brad253 obj1 = new Brad253();
+		Brad254 obj1 = new Brad254();
 	}
 }
 
@@ -22,12 +22,16 @@ class Brad252 extends Brad251 {
 }
 class Brad253 extends Brad252 {
 	Brad253(){
-		super(3);
+		System.out.println("Brad253(int)");
+	}
+	Brad253(int b){
 		System.out.println("Brad253()");
 	}
 }
 
-
-
-
-
+class Brad254 extends Brad253 {
+	Brad254(){
+		super(4);
+		System.out.println("Brad254()");
+	}
+}

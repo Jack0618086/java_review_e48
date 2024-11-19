@@ -21,32 +21,32 @@ public class Jdbc07 {
 			Properties prop = new Properties();
 			prop.put("user", "root");
 			prop.put("password", "root");
-			
+
 			Connection conn = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/eeit48", prop);
-			
+
 			String sql = "SELECT count(*) nums FROM souvenir";
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			rs.next();
 			int nums = rs.getInt("nums");
 			//System.out.println(nums);
-			
+
 			int rpp = 10;
 			int start = (page - 1)*rpp;
 			sql = String.format("SELECT * FROM souvenir WHERE addr like '台中%%' ORDER BY addr LIMIT %d, %d", start,rpp);
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			
+
 			JSONStringer js = new JSONStringer();
 			JSONWriter jw = js.array();
-			
+
 			while (rs.next()) {
 				String id = rs.getString("id");
 				String sname = rs.getString("sname");
 				String addr = rs.getString("addr");
 				System.out.println(String.format("%s:%s:%s", id,sname,addr));
-				
+
 				jw.object();
 				jw.key("id").value(id);
 				jw.key("name").value(sname);

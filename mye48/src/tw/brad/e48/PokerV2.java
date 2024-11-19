@@ -25,8 +25,8 @@ public class PokerV2 {
 			}while (isRepeat);
 			
 			poker[i] = temp;
-			System.out.println(poker[i]);				
-			
+			System.out.println(poker[i]);
+
 		}
 		System.out.println("---");
 		System.out.println(System.currentTimeMillis() - start);

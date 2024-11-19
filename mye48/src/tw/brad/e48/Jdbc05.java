@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.Properties;
 
+import netscape.javascript.JSObject;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,13 +29,13 @@ public class Jdbc05 {
 			System.out.println(e.toString());
 		}
 	}
-	
+
 	static String fetchNetdata() throws Exception{
 		URL url = new URL(
 			"https://data.coa.gov.tw/Service/OpenData/ODwsv/ODwsvAgriculturalProduce.aspx");
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();
-		BufferedReader reader = 
+		BufferedReader reader =
 			new BufferedReader(
 				new InputStreamReader(conn.getInputStream()));
 		StringBuffer sb = new StringBuffer();
@@ -45,12 +46,12 @@ public class Jdbc05 {
 		reader.close();
 		return sb.toString();
 	}
-	
-	
+
+
 	static LinkedList<Souvenir> parseJSONData(String json) throws Exception {
 		LinkedList<Souvenir> datas = new LinkedList<>();
 		try {
-			
+
 			JSONArray root = new JSONArray(json);
 			for (int i=0; i<root.length(); i++) {
 				JSONObject row = root.getJSONObject(i);
@@ -68,17 +69,17 @@ public class Jdbc05 {
 			throw new Exception();
 		}
 	}
-	
-	
+
+
 	static void insertDB(LinkedList<Souvenir> datas) throws Exception{
 		Properties prop = new Properties();
 		prop.put("user", "root");
 		prop.put("password", "root");
-		
+
 		Connection conn = DriverManager.getConnection(
 				"jdbc:mysql://localhost:3306/eeit48", prop);
-		
-		String sql = "INSERT INTO souvenir (sname,tel,lng,lat,picurl,addr) " + 
+
+		String sql = "INSERT INTO souvenir (sname,tel,lng,lat,picurl,addr) " +
 				"VALUES (?,?,?,?,?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 
@@ -91,7 +92,7 @@ public class Jdbc05 {
 			pstmt.setString(6, souvenir.addr);
 			pstmt.executeUpdate();
 		}
-			
+
 	}
 
 }
